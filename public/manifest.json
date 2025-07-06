@@ -1,0 +1,65 @@
+{
+  "name": "Museek Player",
+  "short_name": "Museek",
+  "description": "Your music, your world - A beautiful music streaming application",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#8b5cf6",
+  "orientation": "portrait-primary",
+  "categories": ["music", "entertainment"],
+  "prefer_related_applications": false,
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/uploads/22a6a2b0-7bdf-4eb5-9308-9b278edef5a4.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/uploads/22a6a2b0-7bdf-4eb5-9308-9b278edef5a4.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/uploads/22a6a2b0-7bdf-4eb5-9308-9b278edef5a4.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/uploads/22a6a2b0-7bdf-4eb5-9308-9b278edef5a4.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/uploads/22a6a2b0-7bdf-4eb5-9308-9b278edef5a4.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/uploads/22a6a2b0-7bdf-4eb5-9308-9b278edef5a4.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/uploads/22a6a2b0-7bdf-4eb5-9308-9b278edef5a4.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/uploads/22a6a2b0-7bdf-4eb5-9308-9b278edef5a4.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

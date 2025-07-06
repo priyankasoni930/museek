@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0"
+    />
+    <title>Museek - Your Music, Your World</title>
+    <meta
+      name="description"
+      content="Your music, your world - A beautiful music streaming application"
+    />
+    <meta name="author" content="Priyanka" />
+    <meta
+      property="og:image"
+      content="/uploads/22a6a2b0-7bdf-4eb5-9308-9b278edef5a4.png"
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      href="/uploads/22a6a2b0-7bdf-4eb5-9308-9b278edef5a4.png"
+      type="image/png"
+    />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#8b5cf6" />
+    <meta name="background-color" content="#0a0a0a" />
+
+    <!-- iOS specific meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Museek" />
+    <link
+      rel="apple-touch-icon"
+      href="/uploads/22a6a2b0-7bdf-4eb5-9308-9b278edef5a4.png"
+    />
+    <link
+      rel="apple-touch-startup-image"
+      href="/uploads/22a6a2b0-7bdf-4eb5-9308-9b278edef5a4.png"
+    />
+
+    <!-- Additional PWA meta tags -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Museek" />
+    <meta name="msapplication-TileColor" content="#8b5cf6" />
+    <meta
+      name="msapplication-TileImage"
+      content="/uploads/22a6a2b0-7bdf-4eb5-9308-9b278edef5a4.png"
+    />
+
+    <!-- Prevent horizontal scroll -->
+    <style>
+      html,
+      body {
+        overflow-x: hidden;
+        max-width: 100vw;
+      }
+      * {
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((registration) => {
+              console.log("SW registered successfully: ", registration);
+
+              registration.addEventListener("updatefound", () => {
+                console.log("New service worker available");
+              });
+            })
+            .catch((registrationError) => {
+              console.log("SW registration failed: ", registrationError);
+            });
+        });
+      }
+
+      // Store install prompt for manual trigger
+      let deferredPrompt;
+      window.addEventListener("beforeinstallprompt", (e) => {
+        console.log("beforeinstallprompt triggered");
+        // Allow the event to be shown (don't prevent default immediately)
+        deferredPrompt = e;
+
+        // Dispatch custom event for components to listen
+        window.dispatchEvent(new CustomEvent("pwa-install-available"));
+
+        // You can choose to show the prompt immediately or save it for later
+        // For now, we'll show it after a short delay to avoid interrupting user flow
+        setTimeout(() => {
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+              console.log("User choice:", choiceResult.outcome);
+              deferredPrompt = null;
+            });
+          }
+        }, 3000); // Show after 3 seconds
+      });
+
+      // Make install function globally available for manual trigger
+      window.installPWA = function () {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === "accepted") {
+              console.log("User accepted the install prompt");
+            } else {
+              console.log("User dismissed the install prompt");
+            }
+            deferredPrompt = null;
+          });
+        } else {
+          console.log("Install prompt not available");
+        }
+      };
+
+      window.addEventListener("appinstalled", (evt) => {
+        console.log("Museek was installed successfully");
+        deferredPrompt = null;
+      });
+    </script>
+  </body>
+</html>
